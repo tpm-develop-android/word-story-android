@@ -1,6 +1,7 @@
 package com.example.wordstory.database
 
 import androidx.room.Entity
+import java.io.Serializable
 
 @Entity(tableName = "stories", primaryKeys = ["id", "storage"])
 data class StoriesEntity(
@@ -17,4 +18,4 @@ data class StoriesEntity(
     val storage: String,
     val chaptersize: String?,
     val TRIAL455: String?
-)
+) : Serializable

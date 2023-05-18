@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/bottom_home" android:icon="@drawable/ic_baseline_home_24" android:title="Trang chủ" />
+
+    <item android:id="@+id/bottom_favorite" android:icon="@drawable/follow" android:title="Theo dõi" />
+
+    <item android:id="@+id/bottom_filter" android:icon="@drawable/ic_baseline_view_list_24" android:title="Thể loại" />
+
+    <item android:id="@+id/bottom_profile" android:icon="@drawable/ic_baseline_person_24" android:title="Cá nhân" />
+
+</menu>

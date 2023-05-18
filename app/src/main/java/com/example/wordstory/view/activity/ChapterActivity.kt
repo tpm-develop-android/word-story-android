@@ -2,10 +2,7 @@ package com.example.wordstory.view.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -14,7 +11,6 @@ import com.example.wordstory.databinding.ActivityChapterBinding
 import com.example.wordstory.model.ChaptersModel
 import com.example.wordstory.model.StoriesModel
 import com.example.wordstory.viewmodel.ListFragmentViewModel
-import java.io.InputStream
 
 class ChapterActivity : AppCompatActivity() {
 
@@ -57,14 +53,23 @@ class ChapterActivity : AppCompatActivity() {
         binding.buttonSetting.setOnClickListener {
             val popupMenu = PopupMenu(this, binding.buttonSetting)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener{menuItem ->
-                                val size = menuItem.title.toString()
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                val size = menuItem.title.toString()
                 binding.webView.settings.defaultFontSize = size.toInt()
                 true
             }
             popupMenu.show()
         }
-
+        binding.switchButton.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                binding.webView.setBackgroundColor(resources.getColor(R.color.bg_webview))
+                binding.webView.reload()
+            } else {
+                binding.webView.setBackgroundColor(resources.getColor(R.color.white))
+                binding.webView.reload()
+            }
+        }
+        binding.switchButton.isChecked = false
         getChapterContent(path, chaptersModel.name)
     }
 
@@ -113,7 +118,6 @@ class ChapterActivity : AppCompatActivity() {
         }
         return mutableList[index]
     }
-
 
 
     fun getChapterContent(path: String, name: String) {

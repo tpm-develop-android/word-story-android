@@ -1,16 +1,35 @@
 package com.example.wordstory.repository
 
 import android.app.Application
-import com.example.wordstory.database.MyDao
-import com.example.wordstory.database.MyDatabase
+import com.example.wordstory.database.*
 
 class MainRepository(application: Application) {
 
     private val myDao : MyDao
+    private val favoriteDao: FavoriteDao
 
     init {
         val database = MyDatabase.getInstance(application)
         myDao = database.myDao()
+        val favoriteDatabase = FavoriteDatabase.getInstance(application)
+        favoriteDao = favoriteDatabase.favoriteDao()
+
+    }
+
+    fun getAllFavouriteStories(): MutableList<StoriesEntity>{
+        return favoriteDao.getAllFavouriteStories()
+    }
+
+    fun insertStory(storiesEntity: StoriesEntity){
+        return favoriteDao.insertStory(storiesEntity)
+    }
+
+    fun getStoryById(id: String) : StoriesEntity?{
+        return favoriteDao.getStoryById(id)
+    }
+
+    fun deleteStory(storiesEntity: StoriesEntity){
+        return favoriteDao.deleteStory(storiesEntity)
     }
 
     fun getNames(): List<String>{

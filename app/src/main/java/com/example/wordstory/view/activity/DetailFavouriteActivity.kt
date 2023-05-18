@@ -21,7 +21,7 @@ import com.example.wordstory.viewmodel.MainViewModel
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 
-class DetailActivity : AppCompatActivity() {
+class DetailFavouriteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var adapter: TabLayoutAdapter
@@ -41,12 +41,12 @@ class DetailActivity : AppCompatActivity() {
         val customImage = customToolbar.findViewById<ImageView>(R.id.custom_image)
 
         //receive model
-        val storiesModel = intent.extras?.get("dungback") as StoriesModel
+        val storiesEntity = intent.extras?.get("dungback") as StoriesEntity
 
         //custom toolbar and animation
         binding.collapsee.addView(customToolbar)
-        customTitle.text = storiesModel.name
-        Glide.with(applicationContext).load(storiesModel.image).into(customImage)
+        customTitle.text = storiesEntity.name
+        Glide.with(applicationContext).load(storiesEntity.image).into(customImage)
         binding.appbarCollapse.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (verticalOffset == 0) {
                 binding.collapsee.visibility = View.GONE
@@ -61,17 +61,17 @@ class DetailActivity : AppCompatActivity() {
 
         //pass data to fragments
         val bundle = Bundle()
-        bundle.putSerializable("dung", storiesModel)
+        bundle.putSerializable("dung", convertEntity(storiesEntity))
         adapter = TabLayoutAdapter(supportFragmentManager, lifecycle)
         adapter.setData(bundle)
 
         //setView
-        binding.tvName.text = storiesModel.name
-        Glide.with(applicationContext).load(storiesModel.image).into(binding.shapeimageView)
-        if (storiesModel.author == null || storiesModel.author == "") {
+        binding.tvName.text = storiesEntity.name
+        Glide.with(applicationContext).load(storiesEntity.image).into(binding.shapeimageView)
+        if (storiesEntity.author == null || storiesEntity.author == "") {
             binding.tvNameAuthor.text = "Đang cập nhật"
         } else {
-            binding.tvNameAuthor.text = storiesModel.author
+            binding.tvNameAuthor.text = storiesEntity.author
         }
         binding.buttonBack.setOnClickListener {
             val buttonClick = AlphaAnimation(1F, 0.8F)
@@ -111,17 +111,17 @@ class DetailActivity : AppCompatActivity() {
 
         viewmodel = ViewModelProvider(this)[DetailViewModel::class.java]
 
-        val itemId = storiesModel.id
+        val itemId = storiesEntity.id
         val itemExists = viewmodel.getStoryById(itemId) != null
         binding.btnCheckbox.isChecked = itemExists
 
         binding.btnCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked){
-                viewmodel.insertStory(StoriesEntity(storiesModel.id, storiesModel.name, storiesModel.image, storiesModel.author, storiesModel.summary, storiesModel.link, storiesModel.path, storiesModel.storage, storiesModel.chaptersize, null))
+                viewmodel.insertStory(StoriesEntity(storiesEntity.id, storiesEntity.name, storiesEntity.image, storiesEntity.author, storiesEntity.summary, storiesEntity.link, storiesEntity.path, storiesEntity.storage, storiesEntity.chaptersize, null))
                 val stories =  viewmodel.getAllFavoriteStories()
                 print(stories)
             }else{
-                viewmodel.deleteStory(StoriesEntity(storiesModel.id, storiesModel.name, storiesModel.image, storiesModel.author, storiesModel.summary, storiesModel.link, storiesModel.path, storiesModel.storage, storiesModel.chaptersize, null))
+                viewmodel.deleteStory(StoriesEntity(storiesEntity.id, storiesEntity.name, storiesEntity.image, storiesEntity.author, storiesEntity.summary, storiesEntity.link, storiesEntity.path, storiesEntity.storage, storiesEntity.chaptersize, null))
             }
         }
 
@@ -131,5 +131,9 @@ class DetailActivity : AppCompatActivity() {
     private fun initToolbar() {
         binding.appBar.requestLayout()
         setSupportActionBar(binding.collapsee)
+    }
+
+    private fun convertEntity(storiesEntity: StoriesEntity): StoriesModel{
+        return StoriesModel(storiesEntity.id, storiesEntity.name, storiesEntity.image, storiesEntity.author, storiesEntity.summary, storiesEntity.link, storiesEntity.path, storiesEntity.storage, storiesEntity.chaptersize)
     }
 }

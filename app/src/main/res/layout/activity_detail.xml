@@ -63,13 +63,14 @@
                 app:layout_constraintEnd_toEndOf="@id/toolbar"
                 app:layout_constraintTop_toTopOf="@id/toolbar"
                 >
-                <ImageView
+                <CheckBox
+                    android:id="@+id/btn_checkbox"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginRight="32dp"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:src="@drawable/heart"
-                     />
+                    style="@android:style/Widget.Material.CompoundButton.CheckBox"
+                    android:button="@drawable/checkbox"
+                    android:buttonTint="@android:color/darker_gray" />
             </LinearLayout>
 
 
@@ -89,6 +90,7 @@
                     android:foreground="?android:attr/selectableItemBackground"
                     android:src="@drawable/like"
                      />
+
             </LinearLayout>
 
 
