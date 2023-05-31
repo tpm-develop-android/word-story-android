@@ -1,5 +1,6 @@
 package com.example.wordstory.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,7 +10,7 @@ import androidx.room.Query
 @Dao
 interface FavoriteDao {
     @Query("select * from stories")
-    fun getAllFavouriteStories(): MutableList<StoriesEntity>
+    fun getAllFavouriteStories(): LiveData<MutableList<StoriesEntity>>
 
     @Insert(onConflict = REPLACE)
     fun insertStory(storiesEntity: StoriesEntity)

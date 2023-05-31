@@ -1,6 +1,7 @@
 package com.example.wordstory.repository
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import com.example.wordstory.database.*
 
 class MainRepository(application: Application) {
@@ -16,7 +17,7 @@ class MainRepository(application: Application) {
 
     }
 
-    fun getAllFavouriteStories(): MutableList<StoriesEntity>{
+    fun getAllFavouriteStories(): LiveData<MutableList<StoriesEntity>> {
         return favoriteDao.getAllFavouriteStories()
     }
 

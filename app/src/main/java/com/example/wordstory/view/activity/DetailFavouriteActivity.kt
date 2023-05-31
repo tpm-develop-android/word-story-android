@@ -12,12 +12,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.wordstory.R
 import com.example.wordstory.adapter.TabLayoutAdapter
-import com.example.wordstory.database.FavoriteDatabase
 import com.example.wordstory.database.StoriesEntity
 import com.example.wordstory.databinding.ActivityDetailBinding
 import com.example.wordstory.model.StoriesModel
 import com.example.wordstory.viewmodel.DetailViewModel
-import com.example.wordstory.viewmodel.MainViewModel
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 
@@ -74,10 +72,7 @@ class DetailFavouriteActivity : AppCompatActivity() {
             binding.tvNameAuthor.text = storiesEntity.author
         }
         binding.buttonBack.setOnClickListener {
-            val buttonClick = AlphaAnimation(1F, 0.8F)
-            it.startAnimation(buttonClick)
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            onBackPressed()
         }
         val buttonClick = AlphaAnimation(1F, 0.8F)
 

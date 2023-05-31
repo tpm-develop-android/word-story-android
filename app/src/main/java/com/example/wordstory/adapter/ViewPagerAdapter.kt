@@ -10,7 +10,7 @@ import com.example.wordstory.view.fragment.ProfileFragment
 
 class ViewPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentStatePagerAdapter(fm, behavior ) {
     override fun getCount(): Int {
-        return 4
+        return 2
     }
 
     override fun getItem(position: Int): Fragment {
@@ -21,12 +21,12 @@ class ViewPagerAdapter(fm: FragmentManager, behavior: Int) : FragmentStatePagerA
             1 -> {
                 return FavoriteFragment()
             }
-            2 -> {
-                return FilterFragment()
-            }
-            3 -> {
-                return ProfileFragment()
-            }
+//            2 -> {
+//                return FilterFragment()
+//            }
+//            3 -> {
+//                return ProfileFragment()
+//            }
             else -> {
                 return HomeFragment()
             }

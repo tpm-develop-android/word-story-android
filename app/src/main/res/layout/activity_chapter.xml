@@ -48,18 +48,29 @@
                 android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/switchButton"
+                app:layout_constraintEnd_toStartOf="@id/button_setting"
                 app:layout_constraintStart_toEndOf="@id/button_back"
                 app:layout_constraintTop_toTopOf="parent" />
-            
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/switchButton"
+
+            <ImageView
+                android:id="@+id/button_setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/setting"
+                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/button_back"
                 app:layout_constraintBottom_toBottomOf="@id/button_back"
                 />
+            
+<!--            <androidx.appcompat.widget.SwitchCompat-->
+<!--                android:id="@+id/switchButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@id/button_back"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/button_back"-->
+<!--                />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -125,16 +136,16 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <ImageView
-                android:id="@+id/button_setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/setting"
-                app:layout_constraintTop_toTopOf="@id/back"
-                app:layout_constraintBottom_toBottomOf="@id/back"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+<!--            <ImageView-->
+<!--                android:id="@+id/button_setting"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/setting"-->
+<!--                app:layout_constraintTop_toTopOf="@id/back"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/back"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                />-->
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

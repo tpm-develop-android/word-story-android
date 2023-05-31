@@ -16,7 +16,8 @@ class ChapterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChapterBinding
     private lateinit var viewModel: ListFragmentViewModel
-
+    private var nightMode = false
+    var defaultFont = 14
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,26 +51,45 @@ class ChapterActivity : AppCompatActivity() {
 
         val path = chaptersModel.content.replace("/assets/", "")
         binding.webView.settings.javaScriptEnabled = true
+        binding.webView.settings.defaultFontSize = defaultFont
         binding.buttonSetting.setOnClickListener {
             val popupMenu = PopupMenu(this, binding.buttonSetting)
-            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            popupMenu.menuInflater.inflate(R.menu.setting_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { menuItem ->
-                val size = menuItem.title.toString()
-                binding.webView.settings.defaultFontSize = size.toInt()
-                true
+//
+                when (menuItem.itemId) {
+                    R.id.zoomIn -> {
+                        zoomInFont()
+                        true
+                    }
+
+                    R.id.zoomOut -> {
+                        zoomOutFont()
+                        true
+                    }
+
+                    R.id.comfortMode -> {
+                        changeToComfortMode()
+                        true
+                    }
+
+                    else -> {
+                        false
+                    }
+                }
             }
             popupMenu.show()
         }
-        binding.switchButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                binding.webView.setBackgroundColor(resources.getColor(R.color.bg_webview))
-                binding.webView.reload()
-            } else {
-                binding.webView.setBackgroundColor(resources.getColor(R.color.white))
-                binding.webView.reload()
-            }
-        }
-        binding.switchButton.isChecked = false
+//        binding.switchButton.setOnCheckedChangeListener { buttonView, isChecked ->
+//            if (isChecked) {
+//                binding.webView.setBackgroundColor(resources.getColor(R.color.bg_webview))
+//                binding.webView.reload()
+//            } else {
+//                binding.webView.setBackgroundColor(resources.getColor(R.color.white))
+//                binding.webView.reload()
+//            }
+//        }
+//        binding.switchButton.isChecked = false
         getChapterContent(path, chaptersModel.name)
     }
 
@@ -98,6 +118,7 @@ class ChapterActivity : AppCompatActivity() {
                 }
                 return mutableList[index]
             }
+
             Action.PREVIOUS -> {
                 binding.next.visibility = View.VISIBLE
                 binding.back.visibility = View.VISIBLE
@@ -107,6 +128,7 @@ class ChapterActivity : AppCompatActivity() {
                 }
                 return mutableList[index]
             }
+
             else -> {
                 if (index == last) {
                     binding.next.visibility = View.GONE
@@ -134,6 +156,27 @@ class ChapterActivity : AppCompatActivity() {
         val htmlContentWithStyles = htmlFileContents.replace("</head>", "$cssStyles</head>")
         //binding.webView.loadUrl("file:///android_asset/${path}")
         binding.webView.loadDataWithBaseURL(null, htmlContentWithStyles, "text/html", "UTF-8", null)
+    }
+
+    fun changeToComfortMode() {
+        nightMode = !nightMode
+        if (nightMode) {
+            binding.webView.setBackgroundColor(resources.getColor(R.color.bg_webview))
+            binding.webView.reload()
+        } else {
+            binding.webView.setBackgroundColor(resources.getColor(R.color.white))
+            binding.webView.reload()
+        }
+    }
+
+    fun zoomInFont(){
+        defaultFont += 2
+        binding.webView.settings.defaultFontSize = defaultFont
+    }
+
+    fun zoomOutFont(){
+        defaultFont -= 2
+        binding.webView.settings.defaultFontSize = defaultFont
     }
 
     enum class Action {

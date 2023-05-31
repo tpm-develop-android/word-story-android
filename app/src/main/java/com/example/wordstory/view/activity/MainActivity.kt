@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -51,12 +52,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.bottom_favorite -> {
                     binding.viewPager.currentItem = 1
                 }
-                R.id.bottom_filter -> {
-                    binding.viewPager.currentItem = 2
-                }
-                R.id.bottom_profile -> {
-                    binding.viewPager.currentItem = 3
-                }
+//                R.id.bottom_filter -> {
+//                    binding.viewPager.currentItem = 2
+//                }
+//                R.id.bottom_profile -> {
+//                    binding.viewPager.currentItem = 3
+//                }
             }
             true
         }
@@ -67,5 +68,25 @@ class MainActivity : AppCompatActivity() {
     private fun setUpViewPager(){
        var viewPagerAdapter : ViewPagerAdapter = ViewPagerAdapter(supportFragmentManager, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
         binding.viewPager.adapter = viewPagerAdapter
+        binding.viewPager.addOnPageChangeListener(object: OnPageChangeListener{
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                when(position){
+                    0 -> binding.bottomNavigation.menu.findItem(R.id.bottom_home).isChecked = true
+                    1 -> binding.bottomNavigation.menu.findItem(R.id.bottom_favorite).isChecked = true
+                }
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+        })
     }
 }

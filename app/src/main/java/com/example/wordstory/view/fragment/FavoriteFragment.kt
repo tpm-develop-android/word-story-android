@@ -20,7 +20,6 @@ class FavoriteFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
     private lateinit var detailViewModel: DetailViewModel
     private var list: MutableList<StoriesEntity> = mutableListOf()
-    private lateinit var favoriteRecyclerviewAdapter: FavoriteRecyclerviewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,19 +33,19 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         detailViewModel = ViewModelProvider(this)[DetailViewModel::class.java]
-        list = detailViewModel.getAllFavoriteStories()
-        favoriteRecyclerviewAdapter = FavoriteRecyclerviewAdapter(list)
         binding.apply {
             rcvList.layoutManager = LinearLayoutManager(context)
-            rcvList.adapter = favoriteRecyclerviewAdapter
         }
-
-        favoriteRecyclerviewAdapter.onItemClick = {
-            val intent = Intent(activity, DetailFavouriteActivity::class.java)
-            val bundle = Bundle()
-            bundle.putSerializable("dungback", it)
-            intent.putExtras(bundle)
-            startActivity(intent)
+        detailViewModel.getAllFavoriteStories().observe(viewLifecycleOwner) {
+            val adapter = FavoriteRecyclerviewAdapter(it)
+            binding.rcvList.adapter = adapter
+            adapter.onItemClick = {
+                val intent = Intent(activity, DetailFavouriteActivity::class.java)
+                val bundle = Bundle()
+                bundle.putSerializable("dungback", it)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
         }
     }
 }
